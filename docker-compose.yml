@@ -10,15 +10,3 @@ services:
       - ./init-scripts/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5435:5432"
-
-
-#  ticket-booking-mongodb:
-#    image: mongodb/mongodb-community-server:7.0.8-ubi8
-#    container_name: ticket-booking-mongodb
-#    environment:
-#      - MONGODB_INITDB_ROOT_USERNAME_FILE=root
-#      - MONGODB_INITDB_ROOT_PASSWORD_FILE=example
-#    ports:
-#      - "27018:27017"
-#    volumes:
-#      - ./init-scripts/mongodb/init.js:/docker-entrypoint-initdb.d/init.js
