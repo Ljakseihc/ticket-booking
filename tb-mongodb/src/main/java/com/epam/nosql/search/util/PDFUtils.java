@@ -1,14 +1,15 @@
 package com.epam.nosql.search.util;
 
-import com.epam.nosql.search.dto.entity.Ticket;
+import com.epam.nosql.search.model.entity.Ticket;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Component;
 
@@ -20,32 +21,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-/**
- * The type Pdf utils.
- */
+@Slf4j
+@Getter
+@Setter
 @Component
 public class PDFUtils {
 
-    /**
-     * The constant log.
-     */
-    private static final Logger log = LoggerFactory.getLogger(PDFUtils.class);
-
-    /**
-     * The Tickets.
-     */
     private List<Ticket> tickets;
 
-    /**
-     * The Path.
-     */
     private Path path;
 
-    /**
-     * Gets pdf document.
-     *
-     * @return the pdf document
-     */
     public InputStreamResource getPDFDocument() {
         try {
             InputStream inputStream = Files.newInputStream(path);
@@ -56,9 +41,6 @@ public class PDFUtils {
         }
     }
 
-    /**
-     * Create pdf file of booked tickets by user.
-     */
     public void createPDFFileOfBookedTicketsByUser() {
         log.info("Creating a pdf file of booked tickets by user");
         Document doc = new Document();
@@ -76,11 +58,6 @@ public class PDFUtils {
         }
     }
 
-    /**
-     * Create file output stream.
-     *
-     * @return the output stream
-     */
     private OutputStream createFile() {
         log.info("Creating pdf file with path: {}", path);
         try {
@@ -93,22 +70,12 @@ public class PDFUtils {
         }
     }
 
-    /**
-     * Create table and insert date pdf p table.
-     *
-     * @return the pdf p table
-     */
     private PdfPTable createTableAndInsertDate() {
         PdfPTable table = createTable();
         insertDataInTable(table);
         return table;
     }
 
-    /**
-     * Create table pdf p table.
-     *
-     * @return the pdf p table
-     */
     private PdfPTable createTable() {
         PdfPTable table = new PdfPTable(5);
         createAndAddCells(table, "ID", "User ID", "Event ID", "Place", "Category");
@@ -116,12 +83,6 @@ public class PDFUtils {
         return table;
     }
 
-    /**
-     * Create and add cells.
-     *
-     * @param table  the table
-     * @param values the values
-     */
     private void createAndAddCells(PdfPTable table, String... values) {
         for (String value : values) {
             PdfPCell cell = new PdfPCell(new Phrase(value));
@@ -129,25 +90,17 @@ public class PDFUtils {
         }
     }
 
-    /**
-     * Insert data in table.
-     *
-     * @param table the table
-     */
     private void insertDataInTable(PdfPTable table) {
         for (Ticket ticket : tickets) {
             createAndAddCells(table,
                     String.valueOf(ticket.getId()),
-                    String.valueOf(ticket.getUser().getId()),
-//                    String.valueOf(ticket.getEvent().getId()),
+                    String.valueOf(ticket.getUserId()),
+                    String.valueOf(ticket.getEventId()),
                     String.valueOf(ticket.getPlace()),
                     String.valueOf(ticket.getCategory()));
         }
     }
 
-    /**
-     * Delete pdf document.
-     */
     public void deletePDFDocument() {
         log.info("Removing pdf file with path: {}", path);
         try {
@@ -157,23 +110,5 @@ public class PDFUtils {
             log.info("Can not to remove a pdf file with path: {}", path, e);
             throw new RuntimeException("Can not to remove a pdf file with path: " + path, e);
         }
-    }
-
-    /**
-     * Sets tickets.
-     *
-     * @param tickets the tickets
-     */
-    public void setTickets(List<Ticket> tickets) {
-        this.tickets = tickets;
-    }
-
-    /**
-     * Sets path.
-     *
-     * @param path the path
-     */
-    public void setPath(Path path) {
-        this.path = path;
     }
 }

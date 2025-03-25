@@ -1,15 +1,10 @@
 package com.epam.nosql.search.util;
 
-import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 
-/**
- * The type Constants.
- */
 public class Constants {
 
-    /**
-     * The constant DATE_FORMATTER.
-     */
-    public static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    public static final String DATE_FORMAT_REGEXP = "^\\d{2}-\\d{2}-\\d{4}$";
 
 }

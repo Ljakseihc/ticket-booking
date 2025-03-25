@@ -16,6 +16,10 @@ build/
 bin/
 !src/main/**/bin/
 !src/test/**/bin/
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
 
 ### IntelliJ IDEA ###
 .idea
@@ -25,6 +29,13 @@ bin/
 out/
 !src/main/**/out/
 !src/test/**/out/
+.idea/
+.idea/modules.xml
+.idea/jarRepositories.xml
+.idea/compiler.xml
+.idea/libraries/
+!**/src/main/**/build/
+!**/src/test/**/build/
 
 ### NetBeans ###
 /nbproject/private/
@@ -37,3 +48,6 @@ out/
 .vscode/
 # Ignore Gradle build output directory
 build
+
+### Mac OS ###
+.DS_Store

@@ -1,16 +1,19 @@
 package com.epam.nosql.search.service;
 
-import com.epam.nosql.search.dto.Category;
-import com.epam.nosql.search.dto.entity.Event;
-import com.epam.nosql.search.dto.entity.Ticket;
-import com.epam.nosql.search.dto.entity.User;
+import com.epam.nosql.search.model.Category;
+import com.epam.nosql.search.model.entity.Event;
+import com.epam.nosql.search.model.entity.Ticket;
+import com.epam.nosql.search.model.entity.User;
 
 import java.util.List;
 
 public interface TicketService {
 
-    Ticket bookTicket(long userId, long eventId, int place, Category category);
-    List<Ticket> getBookedTickets(User user, int pageSize, int pageNum);
-    List<Ticket> getBookedTickets(Event event, int pageSize, int pageNum);
-    boolean cancelTicket(long ticketId);
+    Ticket bookTicket(String userId, String eventId, int place, Category category);
+
+    List<Ticket> getBookedTicketsByUserId(String userId, int pageSize, int pageNum);
+
+    List<Ticket> getBookedTicketsByEventId(String eventId, int pageSize, int pageNum);
+
+    void cancelTicket(String ticketId);
 }
